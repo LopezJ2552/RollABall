@@ -8,16 +8,19 @@ public class PlayerController : MonoBehaviour
     public float speed;
     public Text countText;
     public Text scoreText;
+    public Text livesText;
     public Text winText;
     private Rigidbody rb;
     private int count;
     private int score;
+    private int lives;
 
     void Start ()
     {
         rb = GetComponent<Rigidbody>();
         count = 0;
         score = 0;
+        lives = 3;
         SetAllText ();
         winText.text = "";
     }
@@ -49,12 +52,16 @@ public class PlayerController : MonoBehaviour
         {
             other.gameObject.SetActive(false);
             count = count + 1;
-            score = score - 1;
+            lives = lives - 1;
             SetAllText ();
         }
-        if (count == 12)
+        if (score == 12)
         {
             transform.position = new Vector3(56.0f, transform.position.y,0.0f);
+        }
+        if (lives == 0)
+        {
+            Destroy(gameObject);
         }
     }
 
@@ -62,7 +69,8 @@ public class PlayerController : MonoBehaviour
     {
         countText.text = "Count: " + count.ToString ();
         scoreText.text = "Score: " + score.ToString ();
-        if (score == count && count == 12)
+        livesText.text = "Lives: " + lives.ToString();
+        if (score == 23)
         {
             winText.text = "You Win!";
         }
